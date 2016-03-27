@@ -24,10 +24,13 @@ These are optional objects which can be added to VectorResponses.
 @author  Brian Van Klaveren, SLAC
 """
 
+
 class Range(object):
     pass
 
+
 class OffsetMaxSlice(Range):
+
     def __init__(self, offset, max, length=None):
         """
         Offset-Max range type.
@@ -41,7 +44,9 @@ class OffsetMaxSlice(Range):
         if length:
             self.length = length
 
+
 class OffsetLimitSlice(Range):
+
     def __init__(self, offset, limit, length=None):
         """
         Offset-Limit range type.

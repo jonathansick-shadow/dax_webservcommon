@@ -25,7 +25,9 @@ from collections import OrderedDict
 from lsst.dax.webservcommon import ResponseEncoder, MixInEncoder, TypeEncoder, ResponseDecoder, TypeDecoder, MixInDecoder
 from lsst.dax.webservcommon import ScalarResponse, VectorResponse, ErrorResponse
 
+
 class TestObject(object):
+
     def __init__(self, a=None, b=None):
         self.a = a
         self.b = b
@@ -38,14 +40,18 @@ class TestObject(object):
     def __str__(self):
         return "TestObject({},{})".format(self.a, self.b)
 
+
 class ComplexEncoder(TypeEncoder):
+
     def can_encode(self, obj):
         return isinstance(obj, complex)
 
     def default(self, obj):
         return [obj.real, obj.imag]
 
+
 class TestObjectEncoderDecoder(TypeEncoder, TypeDecoder):
+
     def can_encode(self, obj):
         return isinstance(obj, TestObject)
 
@@ -60,18 +66,19 @@ class TestObjectEncoderDecoder(TypeEncoder, TypeDecoder):
     def decode_object(self, obj):
         return TestObject(obj["a"], obj["b"])
 
+
 class TestResponseEncodingDecoding(unittest.TestCase):
 
     def test_object_response(self):
         result = {
-            "a":1,
-            "b":2
+            "a": 1,
+            "b": 2
         }
 
         expected = {
-            "result":{
-                "a":1,
-                "b":2
+            "result": {
+                "a": 1,
+                "b": 2
             }
         }
 
@@ -91,7 +98,6 @@ class TestResponseEncodingDecoding(unittest.TestCase):
         actual_obj = decoder.decode(actual_str)
         self.assertEqual(actual_obj, expected_obj)
 
-
     def test_error_response(self):
         encoder = ResponseEncoder()
         decoder = ResponseDecoder()
@@ -102,11 +108,11 @@ class TestResponseEncodingDecoding(unittest.TestCase):
     def test_mixin_encoder(self):
 
         expected = {
-            "results":[
+            "results": [
                 {
                     "_type": "TestObject",
-                    "a":2,
-                    "b":4
+                    "a": 2,
+                    "b": 4
                 },
                 [2.0, 1.0]
             ]
@@ -131,11 +137,11 @@ class TestResponseEncodingDecoding(unittest.TestCase):
 
     def test_mixin_decoder(self):
         expected = {
-            "results":[
+            "results": [
                 {
                     "_type": "TestObject",
-                    "a":2,
-                    "b":4
+                    "a": 2,
+                    "b": 4
                 },
                 [2.0, 1.0]
             ]

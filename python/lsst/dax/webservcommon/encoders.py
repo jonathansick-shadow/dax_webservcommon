@@ -31,6 +31,7 @@ class TypeEncoder(json.JSONEncoder):
     """
     A JSONEncoder built for encoding specific objects.
     """
+
     def __init__(self, **kwargs):
         self.typ = kwargs.get("typ", None)
 
@@ -42,7 +43,9 @@ class TypeEncoder(json.JSONEncoder):
         """
         return isinstance(obj, self.typ)
 
+
 class MixInEncoder(TypeEncoder):
+
     def __init__(self, **kwargs):
         """
         MixInEncoder takes a list of TypeEncoders as it's only parameter. It will iterate through the list
@@ -66,6 +69,7 @@ class MixInEncoder(TypeEncoder):
 
 
 class BaseResponseEncoder(TypeEncoder):
+
     def default(self, obj):
         if isinstance(obj, Response):
             ret = {}
@@ -77,21 +81,25 @@ class BaseResponseEncoder(TypeEncoder):
 
 
 class ScalarResponseEncoder(BaseResponseEncoder):
+
     def __init__(self, **kwargs):
         self.typ = ScalarResponse
 
 
 class VectorResponseEncoder(BaseResponseEncoder):
+
     def __init__(self, **kwargs):
         self.typ = VectorResponse
 
 
 class ErrorResponseEncoder(BaseResponseEncoder):
+
     def __init__(self, **kwargs):
         self.typ = ErrorResponse
 
 
 class ResponseEncoder(MixInEncoder):
+
     def __init__(self, **kwargs):
         self.encoders = [ScalarResponseEncoder(**kwargs),
                          VectorResponseEncoder(**kwargs),

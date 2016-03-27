@@ -26,6 +26,7 @@ from lsst.dax.webservcommon import ScalarResponse, VectorResponse, ErrorResponse
 result = [i for i in range(2)]
 results = [result for i in range(3)]
 
+
 class RenderTemplateTest(unittest.TestCase):
 
     def test_vector(self):

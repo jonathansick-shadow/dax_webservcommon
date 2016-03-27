@@ -23,7 +23,9 @@ Implementation of Response specifications for REST APIs.
 @author  Brian Van Klaveren, SLAC
 """
 
+
 class Response(object):
+
     def __eq__(self, other):
         if not isinstance(other, type(self)):
             return False

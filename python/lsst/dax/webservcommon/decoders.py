@@ -31,6 +31,7 @@ class TypeDecoder(json.JSONDecoder):
     """
     A JSONDecoder which allows subclasses to notify if they can decode a type.
     """
+
     def decode_object(self, obj):
         """
         Subclasses should implement this and return the type of object they intend to decode.
@@ -57,6 +58,7 @@ class TypeDecoder(json.JSONDecoder):
 
 
 class MixInDecoder(TypeDecoder):
+
     def __init__(self, **kwargs):
         """
         MixInDecoder takes a list of TypeDecoders as it's only parameter. It will iterate through the list
@@ -81,6 +83,7 @@ class MixInDecoder(TypeDecoder):
 
 
 class ScalarResponseDecoder(TypeDecoder):
+
     def can_decode(self, obj):
         return "result" in obj.keys()
 
@@ -89,6 +92,7 @@ class ScalarResponseDecoder(TypeDecoder):
 
 
 class VectorResponseDecoder(TypeDecoder):
+
     def can_decode(self, obj):
         return "results" in obj.keys()
 
@@ -97,6 +101,7 @@ class VectorResponseDecoder(TypeDecoder):
 
 
 class ErrorResponseDecoder(TypeDecoder):
+
     def can_decode(self, obj):
         return "exception" in obj.keys()
 
@@ -105,6 +110,7 @@ class ErrorResponseDecoder(TypeDecoder):
 
 
 class ResponseDecoder(MixInDecoder):
+
     def __init__(self, **kwargs):
         self.decoders = [ScalarResponseDecoder(**kwargs),
                          VectorResponseDecoder(**kwargs),
